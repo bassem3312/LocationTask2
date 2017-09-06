@@ -30,6 +30,7 @@ public class PlacesListAPIPresenterImp implements PlacesListAPIPresenter {
     @Override
     public void callBey2ollakPlacesAPI(int page, int size) {
         if (NetWorkUtility.CheckInternetConnection(mContext)) {
+            placesListActivityInterface.showProgressLoading();
             PlacesService locationService = PlacesService.retrofit.create(PlacesService.class);
             Call<Bey2ollakPlacesResult> call = locationService.getPlaces(page, size);
             call.enqueue(new Callback<Bey2ollakPlacesResult>() {
@@ -37,15 +38,16 @@ public class PlacesListAPIPresenterImp implements PlacesListAPIPresenter {
                 public void onResponse(Call<Bey2ollakPlacesResult> call, Response<Bey2ollakPlacesResult> response) {
                     Log.e("=====Size of arraylist", response.body().getContent().size() + "");
                     placesListActivityInterface.populatePlacesList(response.body());
+                    placesListActivityInterface.dismissProgressLoading();
                 }
 
                 @Override
                 public void onFailure(Call<Bey2ollakPlacesResult> call, Throwable t) {
-
+                    placesListActivityInterface.dismissProgressLoading();
                     placesListActivityInterface.showErrorDialog(t.toString());
                 }
             });
-        }else{
+        } else {
             placesListActivityInterface.showErrorDialog(mContext.getString(R.string.connection_error_message));
         }
     }
