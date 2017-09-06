@@ -21,7 +21,7 @@ public interface PlacesService {
             @Query("size") int size);
 
 
-    public static final Retrofit retrofit = new Retrofit.Builder()
+    Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Constants.API_BASE_DOMAIN)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

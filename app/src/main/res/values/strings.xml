@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LocationTask</string>
+    <string name="connection_error_message">Connection Error , Kindly check your device network connection</string>
 </resources>

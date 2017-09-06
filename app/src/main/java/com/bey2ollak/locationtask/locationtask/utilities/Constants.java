@@ -5,6 +5,7 @@ package com.bey2ollak.locationtask.locationtask.utilities;
  */
 
 public class Constants {
+    public static final int PAGES_SIZE =25 ;
     public  static  String API_BASE_DOMAIN="http://bey2ollak-places-task.eu-west-1.elasticbeanstalk.com/api/";
     public  static  String PLASES_API="json/places";
     public  static  String PAGE_PARAM="page";
