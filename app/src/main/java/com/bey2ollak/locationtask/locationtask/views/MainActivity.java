@@ -13,6 +13,7 @@ import com.bey2ollak.locationtask.locationtask.models.Bey2ollakPlacesResult;
 import com.bey2ollak.locationtask.locationtask.models.Content;
 import com.bey2ollak.locationtask.locationtask.presenters.imps.PlacesListAPIPresenterImp;
 import com.bey2ollak.locationtask.locationtask.utilities.Constants;
+import com.bey2ollak.locationtask.locationtask.utilities.EndlessRecyclerViewScrollListener;
 import com.bey2ollak.locationtask.locationtask.viewInterfaces.PlacesListActivityInterface;
 
 import java.util.ArrayList;
@@ -42,6 +43,14 @@ public class MainActivity extends AppCompatActivity implements PlacesListActivit
 
         placesAdapter = new PlacesAdapter(new ArrayList<Content>());
         recPlaceList.setAdapter(placesAdapter);
+
+        recPlaceList.addOnScrollListener(new EndlessRecyclerViewScrollListener(llm) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                callGetPlacedAPI(page);
+            }
+        });
+
     }
 
     private void callGetPlacedAPI(int pageIndex) {
