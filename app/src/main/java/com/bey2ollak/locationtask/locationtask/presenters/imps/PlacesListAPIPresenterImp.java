@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.bey2ollak.locationtask.locationtask.R;
-import com.bey2ollak.locationtask.locationtask.models.Bey2ollakPlacesResult;
+import com.bey2ollak.locationtask.locationtask.models.Bey2ollakPlacesResponse;
 import com.bey2ollak.locationtask.locationtask.networkUtility.PlacesService;
 import com.bey2ollak.locationtask.locationtask.presenters.interfaces.PlacesListAPIPresenter;
 import com.bey2ollak.locationtask.locationtask.utilities.NetWorkUtility;
@@ -30,25 +30,34 @@ public class PlacesListAPIPresenterImp implements PlacesListAPIPresenter {
     @Override
     public void callBey2ollakPlacesAPI(int page, int size) {
         if (NetWorkUtility.CheckInternetConnection(mContext)) {
-            placesListActivityInterface.showProgressLoading();
+            if (page == 0) {
+                placesListActivityInterface.showProgressLoading();
+            } else {
+                placesListActivityInterface.showLoadMoreProgressLoading();
+            }
+            placesListActivityInterface.setIsLoading(true);
+
             PlacesService locationService = PlacesService.retrofit.create(PlacesService.class);
-            Call<Bey2ollakPlacesResult> call = locationService.getPlaces(page, size);
-            call.enqueue(new Callback<Bey2ollakPlacesResult>() {
+            Call<Bey2ollakPlacesResponse> call = locationService.getPlaces(page, size, 1000L);
+            Log.e("====response URL",call.request().url().toString());
+            call.enqueue(new Callback<Bey2ollakPlacesResponse>() {
                 @Override
-                public void onResponse(Call<Bey2ollakPlacesResult> call, Response<Bey2ollakPlacesResult> response) {
-                    Log.e("=====Size of arraylist", response.body().getContent().size() + "");
+                public void onResponse(Call<Bey2ollakPlacesResponse> call, Response<Bey2ollakPlacesResponse> response) {
                     placesListActivityInterface.populatePlacesList(response.body());
                     placesListActivityInterface.dismissProgressLoading();
+                    placesListActivityInterface.setIsLoading(false);
                 }
 
                 @Override
-                public void onFailure(Call<Bey2ollakPlacesResult> call, Throwable t) {
+                public void onFailure(Call<Bey2ollakPlacesResponse> call, Throwable t) {
                     placesListActivityInterface.dismissProgressLoading();
                     placesListActivityInterface.showErrorDialog(t.toString());
+                    placesListActivityInterface.setIsLoading(false);
                 }
             });
         } else {
             placesListActivityInterface.showErrorDialog(mContext.getString(R.string.connection_error_message));
+            placesListActivityInterface.setIsLoading(false);
         }
     }
 }

@@ -1,6 +1,7 @@
 
 package com.bey2ollak.locationtask.locationtask.models;
 
+import com.bey2ollak.locationtask.locationtask.utilities.Constants;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,6 +23,7 @@ public class Content {
     @SerializedName("longitude")
     @Expose
     private Double longitude;
+    private int viewType = Constants.VIEW_TYPE_Bey2ollak_Places_ITEM;
 
     public Integer getId() {
         return id;
@@ -63,4 +65,11 @@ public class Content {
         this.longitude = longitude;
     }
 
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
 }

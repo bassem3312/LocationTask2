@@ -5,10 +5,17 @@ package com.bey2ollak.locationtask.locationtask.viewInterfaces;
  */
 
 public interface BaseViewInterface {
+
     public void showProgressLoading();
+
+    public void showLoadMoreProgressLoading();
 
     public void dismissProgressLoading();
 
+    public void dismissLoadMoreProgressLoading();
+
     public void showErrorDialog(String message);
+
+    public void setIsLoading(boolean message);
 
 }

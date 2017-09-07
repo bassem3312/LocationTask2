@@ -1,6 +1,6 @@
 package com.bey2ollak.locationtask.locationtask.networkUtility;
 
-import com.bey2ollak.locationtask.locationtask.models.Bey2ollakPlacesResult;
+import com.bey2ollak.locationtask.locationtask.models.Bey2ollakPlacesResponse;
 import com.bey2ollak.locationtask.locationtask.utilities.Constants;
 
 import retrofit2.Call;
@@ -16,9 +16,10 @@ import retrofit2.http.Query;
 public interface PlacesService {
 
     @GET("json/places")
-    Call<Bey2ollakPlacesResult> getPlaces(
+    Call<Bey2ollakPlacesResponse> getPlaces(
             @Query("page") int page,
-            @Query("size") int size);
+            @Query("size") int size,
+            @Query("delay") long delay);
 
 
     Retrofit retrofit = new Retrofit.Builder()

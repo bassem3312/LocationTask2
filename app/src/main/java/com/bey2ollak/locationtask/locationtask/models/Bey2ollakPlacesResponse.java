@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Bey2ollakPlacesResult {
+public class Bey2ollakPlacesResponse {
 
     @SerializedName("content")
     @Expose
